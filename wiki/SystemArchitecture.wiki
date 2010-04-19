@@ -1,0 +1,10 @@
+#summary Please discuss system architecture here.
+#labels Phase-Design
+
+= Introduction =
+
+The plan is to build a web application which would run in Tomcat server.
+
+
+= Details =
+
