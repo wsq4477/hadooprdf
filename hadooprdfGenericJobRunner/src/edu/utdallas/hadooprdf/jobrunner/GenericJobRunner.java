@@ -88,30 +88,39 @@ public class GenericJobRunner
 				else
 				{
 					//TODO: How to generate a unique prefix ??
-					//TODO: How to get the join variable and the number of variables in a triple pattern
+					//TODO: How to get the join variable and the number of variables in a triple pattern ??
+					//TODO: How to get the literal subjects or objects from a query ??
 					//If join is on subject and the number of variables in the triple pattern is 2 output ( subject, object )
 					if( joinVariable.equalsIgnoreCase( "subject" ) )
 					{
 						if( numOfVariables == 2 )
-							context.write( new Text( sSubject ), new Text( sPredicate.substring( 5, 6 ) + "#" + st.nextToken() ) );
+							context.write( new Text( sSubject ), new Text( sPredicate.substring( 0, 2 ) + "#" + st.nextToken() ) );
 						else
-							context.write( new Text( sSubject ), new Text( sPredicate.substring( 5, 6 ) + "#" + sSubject ) );
+						{
+							String sObject = st.nextToken();
+							
+							if( sObject.equalsIgnoreCase( "queries object" ) )
+								context.write( new Text( sSubject ), new Text( sPredicate.substring( 0, 2 ) + "#" + sSubject ) );
+						}
 					}
 					else
 						if( joinVariable.equalsIgnoreCase( "object" ) )
 						{
 							if( numOfVariables == 2 )
-								context.write( new Text( st.nextToken() ), new Text( sPredicate.substring( 5, 6 ) + "#" + sSubject ) );
+								context.write( new Text( st.nextToken() ), new Text( sPredicate.substring( 0, 2 ) + "#" + sSubject ) );
 							else
 							{
 								String sObject = st.nextToken();
-								context.write( new Text( sObject ), new Text( sPredicate.substring( 5, 6 ) + "#" + sObject ) );
+								
+								if( sSubject.equalsIgnoreCase( "queries subject" ) )
+									context.write( new Text( sObject ), new Text( sPredicate.substring( 0, 2 ) + "#" + sObject ) );
 							}
 						}
 				}
 			}
 			else
 			{
+				//TODO: How to handle multiple prefixes in the same line
 				while( st.hasMoreTokens() )
 				{
 					String token = st.nextToken();
@@ -135,19 +144,13 @@ public class GenericJobRunner
 		 * The setup method for this reducer
 		 * @param context - the context 
 		 */
-		protected void setup( Context context )
-		{
-			
-		}
+		protected void setup( Context context ) { }
 
 		/**
 		 * The cleanup method for this reducer
 		 * @param context - the context
 		 */
-		protected void cleanup( Context context )
-		{
-			
-		}
+		protected void cleanup( Context context ) { }
 
 		/**
 		 * The reduce method
@@ -167,6 +170,7 @@ public class GenericJobRunner
             }
             
             //TODO: How to find the order of results with the given query, may need rearranging of value here
+            //TODO: Sometimes only the key is the result, sometimes the key and part of the value is the result, how to find this out ??
             //Write the result
             context.write( key, new Text( sValue ) );		
 		}
