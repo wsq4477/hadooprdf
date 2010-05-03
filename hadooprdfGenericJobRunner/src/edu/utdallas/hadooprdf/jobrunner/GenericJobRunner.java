@@ -27,6 +27,12 @@ public class GenericJobRunner
 	/** The input filename **/
 	private String filename = "";
 	
+	/** A boolean that denotes if there are more jobs to follow **/
+	private boolean hasMoreJobs = false;
+	
+	/** An integer for the total number of variables in the result **/
+	private int totalVariables = 0;
+	
 	/** The map for prefixes added from the first job **/
 	private static final Map<String,String> hm;
 	static
@@ -160,19 +166,28 @@ public class GenericJobRunner
 		 */
 		protected void reduce( Text key, Iterable<Text> value, Context context ) throws IOException, InterruptedException
 		{
+			int count = 0;
             String sValue = "";
             
             //Iterate over all values for a particular key
             Iterator<Text> iter = value.iterator();
             while ( iter.hasNext() ) 
             {
-                    sValue += iter.next().toString() + '\t';
+            	if( !hasMoreJobs )
+            		count++;
+                sValue += iter.next().toString() + '\t';
             }
             
             //TODO: How to find the order of results with the given query, may need rearranging of value here
             //TODO: Sometimes only the key is the result, sometimes the key and part of the value is the result, how to find this out ??
+            //TODO: How to get if there are more jobs remaining and the total number of variables in the SELECT clause
             //Write the result
-            context.write( key, new Text( sValue ) );		
+            if( !hasMoreJobs )
+            {
+            	if( count == totalVariables ) context.write( key, new Text( sValue ) );
+            }
+            else
+            	context.write( key, new Text( sValue ) );		
 		}
 	}
 }
