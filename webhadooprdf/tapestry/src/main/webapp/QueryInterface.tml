@@ -1,0 +1,54 @@
+<html t:type="layout" title="Welcome to the HadoopRdf Project - QueryInterface"
+      t:sidebarTitle="Current Time"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+      <script src="http://www.google.com/jsapi"></script>
+      <script type="text/javascript">
+
+       // Load jQuery
+        google.load("jquery", "1.4.2");
+
+        google.setOnLoadCallback(function() {
+   
+        });
+
+      </script>
+      <style type="text/css">
+		form		{ text-align: center; }
+		table		{ font-family: Arial, Helvetica, sans-serif;  font-size: 12px; font-weight: normal; margin: auto; }
+		th			{ background-color: #bee; text-align: center; padding: 10px 10px; }
+		td			{ background-color: #eeb; padding: 10px 10px; }
+		td.name		{ text-align: right; vertical-align: top; }
+		div.t-palette { width: 460px; }
+		.datePicker td .topLabel { color:black; }
+	</style>
+
+        <h3>SPARQL Query Builder:</h3>
+        <h6>Prefix</h6>
+
+	<table t:type="grid" t:source="prefixes" t:pagerPosition="top">[Grid here]</table><br/>
+
+        <br> </br>
+        <hr> </hr>
+         <form t:type="form" t:id="inputs">
+		<table id="triples">
+			<tr>
+				<th>Subject</th>
+				<th>Predicate</th>
+				<th>Object</th>
+                                <th>More</th>
+			</tr>
+			<tr id="row">
+                             	<td><input t:type="TextField" value="subject" t:validate="required"/></td>
+				<td><select t:type="Select" model="literal:Ms,Mrs,Mr,Dr,Prof" value="selectedPredicate"/></td>
+				<td><input t:type="TextField" value="object" t:validate="required"/></td>
+                                <td><input type="submit" value="+"></input></td>
+                        </tr>
+                        <tr>
+				<td colspan="4"><input t:type="TextArea" value="Query" size="200px"/></td>
+			</tr>			
+		</table>
+                 <br/>
+                 <input type="submit" value="Submit-Query"/>
+                </form>
+</html>

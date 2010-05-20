@@ -1,0 +1,30 @@
+<html t:type="layout" title="Welcome to the HadoopRdf Project"
+      t:sidebarTitle="Current Time"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+        <!-- Most of the page content, including <head>, <body>, etc. tags, comes from Layout.tml -->
+
+  <p>Please Login:</p>
+            <t:form t:id="userLoginForm">
+            Username <input type="text" t:type="textfield" t:value="Username"/><br/>
+            Password <input type="text" t:type="textfield" t:value="Password"/><br/>
+            <input type="submit" value="Submit"/>
+            </t:form>
+    <p:sidebar>
+
+        
+        <p>The current time is: ${currentTime}.</p>
+
+         <p>
+            <ul>
+                 <li> <t:pagelink page="BrowseDataSet">Browse</t:pagelink></li>
+                 <li> <t:pagelink page="PolicyViewer">Veiw Access Policies </t:pagelink></li>
+            </ul>
+        </p>
+
+        <p>
+            [<t:pagelink page="Index">refresh</t:pagelink>]
+        </p>
+    </p:sidebar>
+
+</html>

@@ -1,0 +1,24 @@
+<html t:type="layout" title="Welcome to the HadoopRdf Project - BrowseDataSet"
+      t:sidebarTitle="Current Time"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+
+    <h1> Avaliable Dataset </h1>
+    <table t:type="grid" t:source="dataSets" t:rowsPerPage="4" t:pagerPosition="top">[Grid here]</table><br/>
+
+    <p:sidebar>
+
+         <p>
+            <ul>
+                 <li> <t:pagelink page="BrowseDataSet">Browse</t:pagelink></li>
+                 <li> <t:pagelink page="QueryInterface">Query Data</t:pagelink></li>
+            </ul>
+        </p>
+
+        <p>
+            [<t:pagelink page="Index">refresh</t:pagelink>]
+        </p>
+    </p:sidebar>
+
+</html>
